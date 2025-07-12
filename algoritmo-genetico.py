@@ -22,3 +22,36 @@ def calcular_distancia(cidade1, cidade2):
 
 def distancia_total(rota):
     return sum(calcular_distancia(rota[i], rota[(i + 1) % len(rota)]) for i in range(len(rota)))
+
+def gerar_populacao_inicial():
+    populacao = []
+    for _ in range(TAMANHO_POPULACAO):
+        rota = nomes_cidades.copy()
+        random.shuffle(rota)
+        populacao.append(rota)
+    return populacao
+
+def selecionar_roleta(populacao, probabilidades):
+    acumulado = np.cumsum(probabilidades)
+    r = np.random.rand()
+    indice = np.searchsorted(acumulado, r)
+    return populacao[min(indice, len(populacao) - 1)]
+
+def calcular_fitness(populacao):
+    distancias = np.array([distancia_total(ind) for ind in populacao])
+    max_dist = distancias.max()
+    pontuacoes = max_dist - distancias
+    return pontuacoes / pontuacoes.sum() if pontuacoes.sum() != 0 else np.ones(len(populacao)) / len(populacao)
+
+def cruzamento(pai1, pai2):
+    corte = random.randint(1, len(pai1) - 1)
+    filho1 = pai1[:corte] + [c for c in pai2 if c not in pai1[:corte]]
+    filho2 = pai2[:corte] + [c for c in pai1 if c not in pai2[:corte]]
+    return filho1, filho2
+
+def mutacao(rota):
+    if random.random() < TAXA_MUTACAO:
+        i, j = random.sample(range(len(rota)), 2)
+        rota[i], rota[j] = rota[j], rota[i]
+    return rota
+
