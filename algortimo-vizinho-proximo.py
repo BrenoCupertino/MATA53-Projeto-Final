@@ -1,3 +1,5 @@
+from cidades import cidades
+
 def nearest_neighbor_tsp(nodes, graph):
     path = []
     distances = []
@@ -33,14 +35,16 @@ def nearest_neighbor_tsp(nodes, graph):
         print(f"City {city}'s Nearest Neighbor's Distance is {distances[i]}")
     print("total traveled distance: ", sum(distances))
 
+def euclidean(p1, p2):
+    return ((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2) ** 0.5
+
 if __name__ == "__main__":
-    nodes = ['A', 'B', 'C', 'D', 'E']
+    nodes = [nome for nome, _, _ in cidades]
+
+    coords = [(x, y) for _, x, y in cidades]
+
     graph = [
-        [0, 60, 217, 164, 69],
-        [60, 0, 290, 201, 79],
-        [217, 290, 0, 113, 303],
-        [164, 201, 113, 0, 196],
-        [69, 79, 303, 196, 0]
+        [euclidean(a, b) for b in coords] for a in coords
     ]
     
     nearest_neighbor_tsp(nodes, graph)

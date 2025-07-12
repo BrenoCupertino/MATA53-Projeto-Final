@@ -1,3 +1,4 @@
+from cidades import cidades
 import math
 import random
 
@@ -91,7 +92,7 @@ class RotaGulosa:
 # --- Bloco de Demonstração ---
 if __name__ == "__main__":
     # Gera uma lista de cidades para teste.
-    lista_de_cidades = [Cidade(x=random.randint(0, 100), y=random.randint(0, 100)) for _ in range(10)]
+    lista_de_cidades = [Cidade(x, y) for _, x, y in cidades]
 
     print("Problema do Caixeiro Viajante com Algoritmo Guloso")
     print("-" * 50)
