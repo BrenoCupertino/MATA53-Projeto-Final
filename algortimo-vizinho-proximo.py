@@ -6,7 +6,7 @@ def nearest_neighbor_tsp(nodes, graph):
     path = []
     distances = []
 
-    current_city = 'A'
+    current_city = '1'
     origin_index = nodes.index(current_city)
 
     total_cities = len(nodes)
