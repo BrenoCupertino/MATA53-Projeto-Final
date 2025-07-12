@@ -1,15 +1,18 @@
 from cidades import cidades
 import math
+import matplotlib.pyplot as plt
 import random
+import time
 
 class Cidade:
     """
     Representa uma cidade e suas coordenadas no plano.
     """
-    def __init__(self, x, y):
+    def __init__(self, x, y, nome):
         # Armazena as coordenadas x e y da cidade.
         self.x = x
         self.y = y
+        self.nome = nome
 
     def custo_para_chegar(self, outra_cidade):
         """
@@ -19,7 +22,7 @@ class Cidade:
 
     def __repr__(self):
         # Define a representação em string de um objeto Cidade.
-        return f"({self.x}, {self.y})"
+        return f"({self.nome} {self.x}, {self.y})"
 
 class RotaGulosa:
     """
@@ -89,20 +92,40 @@ class RotaGulosa:
         """Retorna o custo total da rota."""
         return self.custo_total
 
+def exibir_rota(rota, custo, tempo_execucao):
+    x_rota = [cidade.x for cidade in rota] + [rota[0].x]
+    y_rota = [cidade.y for cidade in rota] + [rota[0].y]
+
+    plt.figure(figsize=(16, 10))
+    plt.plot(x_rota, y_rota, 'go--', linewidth=2.5, label="Rota gulosa")
+
+    for i, cidade in enumerate(rota):
+        plt.annotate(f"{i+1} - {cidade.nome}", (cidade.x, cidade.y), fontsize=12)
+
+    plt.title("Melhor Rota com Algoritmo Guloso - TSP", fontsize=16)
+    plt.suptitle(f"Custo Total: {custo:.2f} | Tempo: {tempo_execucao:.4f}s", y=0.92)
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
 # --- Bloco de Demonstração ---
 if __name__ == "__main__":
     # Gera uma lista de cidades para teste.
-    lista_de_cidades = [Cidade(x, y) for _, x, y in cidades]
+    lista_de_cidades = [Cidade(x, y, nome) for nome, x, y in cidades]
 
     print("Problema do Caixeiro Viajante com Algoritmo Guloso")
     print("-" * 50)
     print("Cidades a visitar:")
     for i, cid in enumerate(lista_de_cidades):
         print(f"  Cidade {i+1}: {cid}")
-    
+        
     # Executa o algoritmo.
+    inicio = time.time()
     solucao_gulosa = RotaGulosa(lista_de_cidades)
     solucao_gulosa.definir_rota()
+    fim = time.time()
+    tempo_execucao = fim - inicio
 
     # Exibe os resultados.
     rota_encontrada = solucao_gulosa.obter_rota()
@@ -114,5 +137,6 @@ if __name__ == "__main__":
         caminho_formatado = " -> ".join([str(c.x) + "," + str(c.y) for c in rota_encontrada])
         print(f"  [{caminho_formatado} -> Início]")
         print(f"\nCusto total da rota: {custo:.2f}")
+        exibir_rota(rota_encontrada, custo, tempo_execucao)
     else:
         print("Não foi possível encontrar uma rota completa.")

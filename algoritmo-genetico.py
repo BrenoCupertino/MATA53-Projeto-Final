@@ -2,6 +2,7 @@ from cidades import cidades
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+import time
 
 # Parâmetros do Algoritmo
 TAMANHO_POPULACAO = 250
@@ -57,7 +58,6 @@ def executar_ag():
     populacao = gerar_populacao_inicial()
     melhor_rota = min(populacao, key=distancia_total)
     melhor_distancia = distancia_total(melhor_rota)
-    historico = [melhor_distancia]
 
     for _ in range(NUM_GERACOES):
         fitness = calcular_fitness(populacao)
@@ -80,16 +80,12 @@ def executar_ag():
             melhor_rota = melhor_atual
             melhor_distancia = dist_atual
 
-        historico.append(melhor_distancia)
 
-    return melhor_rota, melhor_distancia, historico
-
-# Execução
-melhor_rota, melhor_distancia, historico = executar_ag()
+    return melhor_rota, melhor_distancia
 
 # Plot do resultado final
 
-def exibir_rota(rota, distancia):
+def exibir_rota(rota, distancia, tempo_execucao):
     x_rota = [coordenadas_cidades[c][0] for c in rota] + [coordenadas_cidades[rota[0]][0]]
     y_rota = [coordenadas_cidades[c][1] for c in rota] + [coordenadas_cidades[rota[0]][1]]
 
@@ -98,25 +94,22 @@ def exibir_rota(rota, distancia):
 
     for i, cidade in enumerate(rota):
         plt.annotate(f"{i+1} - {cidade}", coordenadas_cidades[cidade], fontsize=12)
-
-    plt.title("Melhor Rota - Problema do Caixeiro Viajante com AG", fontsize=18)
-    plt.suptitle(f"Distância Total: {distancia:.2f} | Gerações: {NUM_GERACOES} | População: {TAMANHO_POPULACAO}", y=1.02)
+    
+    plt.title("Melhor Rota com Algoritmo Genético - TSP", fontsize=16)
+    plt.suptitle(f"Custo Total: {distancia:.2f} | Tempo: {tempo_execucao:.4f}s", y=0.92)
     plt.legend()
-    plt.grid(True)
-    plt.show()
-
-def exibir_convergencia(historico):
-    plt.plot(historico)
-    plt.title("Convergência do Algoritmo Genético")
-    plt.xlabel("Geração")
-    plt.ylabel("Melhor distância")
     plt.grid(True)
     plt.tight_layout()
     plt.show()
 
+# Execução
+inicio = time.time()
+melhor_rota, melhor_distancia = executar_ag()
+fim = time.time()
+tempo_execucao = fim - inicio
 # Mostrar os resultados
 print("Melhor rota encontrada:", melhor_rota)
 print("Distância total:", melhor_distancia)
 
-exibir_rota(melhor_rota, melhor_distancia)
-exibir_convergencia(historico)
+exibir_rota(melhor_rota, melhor_distancia, tempo_execucao)
+
