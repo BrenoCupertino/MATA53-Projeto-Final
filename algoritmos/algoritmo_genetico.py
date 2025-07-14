@@ -1,10 +1,6 @@
-from cidades import cidades
-import matplotlib.pyplot as plt
 import numpy as np
 import random
-import time
 
-# ==========================
 # Parâmetros padrão
 TAMANHO_POPULACAO = 250
 NUM_GERACOES = 200
@@ -12,12 +8,12 @@ TAXA_CROSSOVER = 0.8
 TAXA_MUTACAO = 0.2
 GERACOES_SEM_MELHORA = 50
 
-# ==========================
 # Pré-processamento de cidades
-nomes_cidades = [nome for nome, _, _ in cidades]
-coordenadas_cidades = {nome: (x, y) for nome, x, y in cidades}
 
-# ==========================
+cidades = []
+nomes_cidades = []
+coordenadas_cidades = {}
+
 # Funções principais
 
 def calcular_distancia(cidade1, cidade2):
@@ -54,7 +50,6 @@ def mutacao(rota):
         rota[i], rota[j] = rota[j], rota[i]
     return rota
 
-# ==========================
 # Execução do algoritmo
 def executar_ag(tam_pop=TAMANHO_POPULACAO, geracoes=NUM_GERACOES):
     populacao = gerar_populacao_inicial(nomes_cidades, tam_pop)
@@ -94,38 +89,3 @@ def executar_ag(tam_pop=TAMANHO_POPULACAO, geracoes=NUM_GERACOES):
             break
 
     return melhor_rota, melhor_distancia
-
-# ==========================
-# Visualização
-
-def exibir_rota(rota, distancia, tempo_execucao):
-    x_rota = [coordenadas_cidades[c][0] for c in rota] + [coordenadas_cidades[rota[0]][0]]
-    y_rota = [coordenadas_cidades[c][1] for c in rota] + [coordenadas_cidades[rota[0]][1]]
-
-    plt.figure(figsize=(16, 10))
-    plt.plot(x_rota, y_rota, 'go--', label="Melhor rota", linewidth=2.5)
-
-    for i, cidade in enumerate(rota):
-        plt.annotate(f"{i+1} - {cidade}", coordenadas_cidades[cidade], fontsize=12)
-
-    plt.title("Melhor Rota com Algoritmo Genético - TSP", fontsize=16)
-    plt.suptitle(f"Custo Total: {distancia:.2f} | Tempo: {tempo_execucao:.4f}s", y=0.92)
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.show()
-
-# ==========================
-# Execução
-
-if __name__ == "__main__":
-    inicio = time.time()
-    melhor_rota, melhor_distancia = executar_ag()
-    fim = time.time()
-
-    tempo_execucao = fim - inicio
-    print("Melhor rota encontrada:", melhor_rota)
-    print("Distância total:", melhor_distancia)
-    print("Tempo de execução:", round(tempo_execucao, 4), "s")
-
-    exibir_rota(melhor_rota, melhor_distancia, tempo_execucao)
