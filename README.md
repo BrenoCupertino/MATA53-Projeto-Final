@@ -44,10 +44,11 @@ MATA53-Projeto-Final/
 │   ├── kroA100.tsp.gz
 │   ├── kroA150.tsp.gz
 │   └── pcb442.tsp.gz
-├── cidades.py
-├── algoritmo-genetico.py
-├── algoritmo-guloso.py
-├── algoritmo-vizinho-proximo.py
+├── algoritmos/
+│   ├── algoritmo-genetico.py
+│   ├── algoritmo-guloso.py
+│   ├── algoritmo-vizinho-proximo.py
+├── benchmark.py
 └── README.md
 
 ```
@@ -60,7 +61,7 @@ Siga estas instruções para configurar e rodar o projeto em sua máquina local.
 
 #### Pré-requisitos
 
-Você precisa ter o Python 3 e o `pip` instalados em sua máquina.
+Você precisa ter o Python 3 e o `pip` (que já vem com o Python 3) instalados em sua máquina.
 
 #### Instalação
 
@@ -68,7 +69,7 @@ Você precisa ter o Python 3 e o `pip` instalados em sua máquina.
     ```bash
     git clone https://github.com/BrenoCupertino/MATA53-Projeto-Final.git
     ```
-2.  **Instale as seguintes dependências**:
+2.  **Estando dentro da raiz do projeto, instale as seguintes dependências**:
     ```bash
     pip install numpy tsplib95 matplotlib
     ```
@@ -77,31 +78,27 @@ Você precisa ter o Python 3 e o `pip` instalados em sua máquina.
 
 ### ▶️ Como Executar
 
-Cada algoritmo é executado a partir de seu próprio arquivo Python.
+**⚠️ Importante:** Dado o conjunto de datasets utilizados e as diferenças nos algoritmos o teste demoram cerca de 3min para ser finalizado.
 
-**⚠️ Importante:** Antes de executar, você precisa escolher qual dataset será usado. Abra o arquivo `cidades.py` e altere a variável `caminho` para o arquivo desejado:
+Os algoritmos são executados para um conjunto de datasets pré-definidos.
 
 ```python
 # Exemplo de como configurar para usar o dataset de 76 cidades
 caminho = "./data/eil76.tsp.gz"
 ```
-Após configurar o dataset, execute um dos seguintes comandos no seu terminal:
-* Para executar o Algoritmo Genético
+É necessário duas abordagens diferentes para executar o código nos sistemas Linux e Windows.
+
+* Para executar no sistema Windows, execute o comando abaixo na pasta raiz do projeto:
 ```python
-python algoritmo-genetico.py
+python benchmark.py
 ```
 
-* Para executar o Algoritmo Guloso:
+* Para executar no Linux, execute o comando abaixo na pasta raiz do projeto:
 ```python
-python algoritmo-guloso.py
-
-```
-* Para executar o Algoritmo do Vizinho Mais Próximo:
-``` python
-python algoritmo-vizinho-proximo.py
+python3 benchmark.py
 ```
 
-Ao executar um script, ele irá imprimir no console a melhor rota encontrada, a distância total e o tempo de execução. Em seguida, uma janela do `matplotlib` será aberta, exibindo o gráfico da rota.
+Ao executar o script, será imprimido no console o dataset atual, numero de cidades, custo total e o tempo de execução. Em seguida, uma janela do `matplotlib` será aberta, exibindo um gráfico de comparação dos algoritmos.
 
 ### 📊 Datasets Utilizados
 
