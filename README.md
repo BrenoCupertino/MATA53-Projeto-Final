@@ -78,7 +78,7 @@ Você precisa ter o Python 3 e o `pip` (que já vem com o Python 3) instalados e
 
 ### ▶️ Como Executar
 
-**⚠️ Importante:** Dado o conjunto de datasets utilizados e as diferenças nos algoritmos o teste pode demorar cerca de 3min para ser finalizado.
+**⚠️ Importante:** Dado o conjunto de datasets utilizados e as diferenças nos algoritmos, o teste irá demorar no minimo 3min para ser finalizado.
 
 Os algoritmos são executados para um conjunto de datasets pré-definidos.
 
