@@ -82,10 +82,6 @@ Você precisa ter o Python 3 e o `pip` (que já vem com o Python 3) instalados e
 
 Os algoritmos são executados para um conjunto de datasets pré-definidos.
 
-```python
-# Exemplo de como configurar para usar o dataset de 76 cidades
-caminho = "./data/eil76.tsp.gz"
-```
 É necessário duas abordagens diferentes para executar o código nos sistemas Linux e Windows.
 
 * Para executar no sistema Windows, execute o comando abaixo na pasta raiz do projeto:
